@@ -9,4 +9,6 @@
     <string name="first_we_need_to_know_your_name">First we need to know your name…</string>
     <string name="lets_meet_each_other_first">Let\'s meet each other first?</string>
     <string name="next">Next</string>
+    <string name="hello_trainer">Hello, trainer %1$s!</string>
+    <string name="now_tell_us_which_is_your_favorite_pokemon_type">…now tell us which is your favorite Pokémon type:</string>
 </resources>
