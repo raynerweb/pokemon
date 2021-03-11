@@ -1,6 +1,9 @@
 <resources>
-    <string name="app_name">Pokemon</string>
+    <string name="app_name">Pokemon Finder</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lets_go">Let\'s go!</string>
+    <string name="pikachu">Pikachu</string>
+    <string name="finder">Finder</string>
+    <string name="pokemon">Pokemon</string>
 </resources>
