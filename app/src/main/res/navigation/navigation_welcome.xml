@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_welcome"
+    app:startDestination="@id/welcomeFragment">
+
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="br.com.raynerweb.pokemon.ui.fragment.WelcomeFragment"
+        android:label="fragment_welcome"
+        tools:layout="@layout/fragment_welcome" >
+        <action
+            android:id="@+id/action_welcomeFragment_to_usernameFragment"
+            app:destination="@id/usernameFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/usernameFragment"
+        android:name="br.com.raynerweb.pokemon.ui.fragment.UsernameFragment"
+        android:label="fragment_username"
+        tools:layout="@layout/fragment_username" >
+        <action
+            android:id="@+id/action_usernameFragment_to_pokemonTypeFragment"
+            app:destination="@id/pokemonTypeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pokemonTypeFragment"
+        android:name="br.com.raynerweb.pokemon.ui.fragment.PokemonTypeFragment"
+        android:label="fragment_pokemon_type"
+        tools:layout="@layout/fragment_pokemon_type" />
+</navigation>
