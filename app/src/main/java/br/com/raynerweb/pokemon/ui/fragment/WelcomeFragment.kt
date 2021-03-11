@@ -16,13 +16,12 @@ class WelcomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentWelcomeBinding.inflate(inflater, container, false)
         binding.fragment = this
         binding.lifecycleOwner = this
         return binding.root
     }
-
 
     fun next(view: View) {
         findNavController().navigate(R.id.action_welcomeFragment_to_usernameFragment)
