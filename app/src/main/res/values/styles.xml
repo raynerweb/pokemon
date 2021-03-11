@@ -8,4 +8,14 @@
         <item name="backgroundTint">?attr/colorSecondary</item>
     </style>
 
+    <style name="TextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxBackgroundColor">@android:color/transparent</item>
+        <item name="boxStrokeColor">@color/white</item>
+    </style>
+
+    <style name="EditTextStyle" parent="Widget.MaterialComponents.TimePicker.Display.TextInputEditText">
+        <item name="android:textSize">40sp</item>
+    </style>
+
+
 </resources>

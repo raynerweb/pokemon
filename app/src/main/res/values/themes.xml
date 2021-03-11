@@ -13,7 +13,18 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
 
+        <item name="android:textColorPrimary">@color/white</item>
+
         <!-- Buttons -->
         <item name="materialButtonStyle">@style/PrimaryButtonStyle</item>
+
+        <!-- Typography -->
+        <item name="textAppearanceHeadline2">@style/Headline2</item>
+        <item name="textAppearanceHeadline3">@style/Headline3</item>
+
+        <!-- TextInput -->
+        <item name="textInputLayoutStyle">@style/TextInputLayoutStyle</item>
+        <item name="editTextStyle">@style/EditTextStyle</item>
+
     </style>
 </resources>
