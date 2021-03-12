@@ -28,4 +28,29 @@ class NetworkModule {
         return builder.build()
     }
 
+//    @Provides
+//    @Singleton
+//    fun provideOkHttpClient(): OkHttpClient =
+//        OkHttpClient.Builder().apply {
+//            hostnameVerifier { _, _ -> true }
+//
+//            addNetworkInterceptor(HttpLoggingInterceptor().apply {
+//                level = HttpLoggingInterceptor.Level.BODY
+//            })
+//
+//            connectTimeout(30, TimeUnit.SECONDS)
+//            readTimeout(60, TimeUnit.SECONDS)
+//        }.build()
+//
+//    @Provides
+//    @Singleton
+//    fun proviceConverterFactory(): Converter.Factory {
+//        val builder = GsonBuilder().apply {
+//            registerTypeAdapter(Date::class.java, JsonDeserializer { json, _, _ ->
+//                Date(json.asLong)
+//            })
+//        }.create()
+//        return GsonConverterFactory.create(builder)
+//    }
+
 }
