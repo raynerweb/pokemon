@@ -20,43 +20,41 @@
         tools:context=".ui.fragment.UsernameFragment">
 
         <TextView
+            android:id="@+id/tv_hello"
             style="?attr/textAppearanceHeadline2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
-            android:text="@string/hello_trainer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/hello_trainer" />
 
         <TextView
             style="?attr/textAppearanceHeadline3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:text="@string/now_tell_us_which_is_your_favorite_pokemon_type"
-            app:layout_constraintBottom_toTopOf="@+id/til_username"
+            app:layout_constraintBottom_toTopOf="@+id/til_pokemon_type"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_username"
-            style="?attr/textInputLayoutStyle"
+        <Spinner
+            android:id="@+id/til_pokemon_type"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="66dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/view_pokemon_type" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                style="?attr/editTextStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:inputType="textAutoComplete"
-                android:textSize="24sp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/til_pokemon_type" />
 
         <ImageView
             android:layout_width="wrap_content"

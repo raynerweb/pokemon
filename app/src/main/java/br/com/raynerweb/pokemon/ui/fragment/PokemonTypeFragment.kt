@@ -6,15 +6,31 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import br.com.raynerweb.pokemon.R
+import br.com.raynerweb.pokemon.databinding.FragmentPokemonTypeBinding
 
 class PokemonTypeFragment : Fragment() {
+
+    private lateinit var binding: FragmentPokemonTypeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_pokemon_type, container, false)
+    ): View {
+        binding = FragmentPokemonTypeBinding.inflate(inflater, container, false)
+        binding.fragment = this
+        binding.lifecycleOwner = this
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.tvHello.text = getString(R.string.hello_trainer, "Ráyner")
+
+    }
+
+    fun next(view: View) {
+
     }
 
 }

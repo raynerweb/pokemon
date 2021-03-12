@@ -33,6 +33,7 @@
             style="?attr/textAppearanceHeadline3"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
             android:text="@string/first_we_need_to_know_your_name"
             app:layout_constraintBottom_toTopOf="@+id/til_username"
             app:layout_constraintEnd_toEndOf="parent"
