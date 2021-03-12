@@ -28,7 +28,7 @@ class PokemonRepository @Inject constructor(
         }
     }
 
-    suspend fun getPokemons(): List<ResponsePokemonDto>? {
+    suspend fun getPokemons(): Set<ResponsePokemonDto>? {
         return withContext(context = Dispatchers.IO) {
             val response = pokemonService.get().execute()
             try {

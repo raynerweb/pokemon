@@ -40,12 +40,11 @@ class HomeViewModel @Inject constructor(
         pokemonRepository.getPokemons()?.let { dto ->
             pokemonsState.value = dto.map {
                 Pokemon(
-                    id = it.id,
                     name = it.name,
                     image = it.thumbnailImage,
                     type = it.type
                 )
-            }
+            }.toList().sortedBy { it.name }
         } ?: run {
             errorState.value = "There is no data!"
         }

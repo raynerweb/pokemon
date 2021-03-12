@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.raynerweb.pokemon.databinding.FragmentHomeBinding
+import br.com.raynerweb.pokemon.ui.adapter.PokemonAdapter
 import br.com.raynerweb.pokemon.ui.adapter.PokemonTypeAdapter
 import br.com.raynerweb.pokemon.viewmodel.HomeViewModel
 
@@ -33,14 +34,17 @@ class HomeFragment : Fragment() {
 
         subscribe()
 
-        setup()
-    }
-
-    private fun setup() {
         viewModel.pokemonTypes()
+        viewModel.pokemons()
     }
 
     private fun subscribe() {
+
+        viewModel.pokemonsState.observe(viewLifecycleOwner, {
+            binding.rvPokemons.layoutManager = LinearLayoutManager(requireContext())
+            binding.rvPokemons.adapter = PokemonAdapter(it)
+        })
+
         viewModel.pokemonTypesState.observe(viewLifecycleOwner, {
             binding.rvTypes.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -50,6 +54,7 @@ class HomeFragment : Fragment() {
         viewModel.errorState.observe(viewLifecycleOwner, {
             Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
         })
+
     }
 
 }

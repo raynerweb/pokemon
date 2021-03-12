@@ -7,6 +7,6 @@ import retrofit2.http.GET
 interface PokemonService {
 
     @GET("pokemons.json")
-    fun get(): Call<List<ResponsePokemonDto>>
+    fun get(): Call<Set<ResponsePokemonDto>>
 
 }
