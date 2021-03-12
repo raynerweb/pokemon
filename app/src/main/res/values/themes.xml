@@ -5,14 +5,25 @@
         <item name="colorPrimary">@color/teal_200</item>
         <item name="colorPrimaryVariant">@color/teal_700</item>
         <item name="colorOnPrimary">@color/white</item>
+
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/pink_500</item>
         <item name="colorSecondaryVariant">@color/pink_700</item>
         <item name="colorOnSecondary">@color/white</item>
+
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+
         <!-- Customize your theme here. -->
 
+        <!-- Typography -->
+        <item name="textAppearanceHeadline2">@style/Headline2</item>
+        <item name="textAppearanceHeadline3">@style/Headline3</item>
+        <item name="textAppearanceHeadline4">@style/Headline4</item>
+        <item name="textAppearanceBody1">@style/Body1</item>
+    </style>
+
+    <style name="Theme.Pokemon.Welcome">
         <!-- Text color EditText -->
         <item name="android:textColorPrimary">@color/white</item>
 
@@ -22,14 +33,8 @@
         <!-- Buttons -->
         <item name="materialButtonStyle">@style/PrimaryButtonStyle</item>
 
-        <!-- Typography -->
-        <item name="textAppearanceHeadline2">@style/Headline2</item>
-        <item name="textAppearanceHeadline3">@style/Headline3</item>
-        <item name="textAppearanceHeadline4">@style/Headline4</item>
-
         <!-- TextInput -->
         <item name="textInputLayoutStyle">@style/TextInputLayoutStyle</item>
         <item name="editTextStyle">@style/EditTextStyle</item>
-
     </style>
 </resources>

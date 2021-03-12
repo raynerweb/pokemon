@@ -35,5 +35,14 @@
         android:id="@+id/pokemonTypeFragment"
         android:name="br.com.raynerweb.pokemon.ui.fragment.PokemonTypeFragment"
         android:label="fragment_pokemon_type"
-        tools:layout="@layout/fragment_pokemon_type" />
+        tools:layout="@layout/fragment_pokemon_type" >
+        <action
+            android:id="@+id/action_pokemonTypeFragment_to_homeActivity"
+            app:destination="@id/homeActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/homeActivity"
+        android:name="br.com.raynerweb.pokemon.ui.activity.HomeActivity"
+        android:label="activity_home"
+        tools:layout="@layout/activity_home" />
 </navigation>
