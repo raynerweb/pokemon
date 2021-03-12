@@ -1,26 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:gravity="center"
-    android:padding="8dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/iv_type"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:layout_centerHorizontal="true"
-        tools:src="@drawable/pikachu_dab" />
+    <data>
 
-    <TextView
-        android:id="@+id/tv_description"
-        style="?attr/textAppearanceHeadline4"
+        <variable
+            name="pokemonType"
+            type="br.com.raynerweb.pokemon.domain.PokemonType" />
+    </data>
+
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/iv_type"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp"
-        tools:text="Eletric" />
+        android:gravity="center"
+        android:padding="8dp">
 
-</RelativeLayout>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/iv_type"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_centerHorizontal="true"
+            android:contentDescription="@{pokemonType.name}"
+            tools:src="@drawable/pikachu_dab" />
+
+        <TextView
+            android:id="@+id/tv_description"
+            style="?attr/textAppearanceHeadline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_type"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text="@{pokemonType.name}"
+            tools:text="Eletric" />
+
+    </RelativeLayout>
+</layout>
