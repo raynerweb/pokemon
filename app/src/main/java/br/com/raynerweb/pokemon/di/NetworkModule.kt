@@ -19,7 +19,7 @@ const val BASE_URL = "https://vortigo.blob.core.windows.net/files/pokemon/data/"
 
 @Module
 @InstallIn(SingletonComponent::class)
-class NetworkModule {
+object NetworkModule {
 
     @Provides
     @Singleton
