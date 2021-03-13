@@ -1,10 +1,11 @@
 package br.com.raynerweb.pokemon.ui.fragment
 
+import android.app.SearchManager
+import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +13,7 @@ import br.com.raynerweb.pokemon.databinding.FragmentHomeBinding
 import br.com.raynerweb.pokemon.ui.adapter.PokemonAdapter
 import br.com.raynerweb.pokemon.ui.adapter.PokemonTypeAdapter
 import br.com.raynerweb.pokemon.viewmodel.HomeViewModel
+
 
 class HomeFragment : Fragment() {
 
@@ -23,6 +25,9 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
+        setHasOptionsMenu(true)
+
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.fragment = this
         binding.lifecycleOwner = this
@@ -36,6 +41,16 @@ class HomeFragment : Fragment() {
 
         viewModel.pokemonTypes()
         viewModel.pokemons()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(br.com.raynerweb.pokemon.R.menu.menu_home, menu)
+        val searchItem: MenuItem = menu.findItem(br.com.raynerweb.pokemon.R.id.action_search)
+        val searchManager =
+            requireActivity().getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = searchItem.actionView as SearchView
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
     }
 
     private fun subscribe() {
