@@ -52,6 +52,10 @@ class HomeFragment : Fragment() {
         val searchView = searchItem.actionView as SearchView
         searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
     }
+    
+    fun sortByName(view: View) {
+        
+    }
 
     private fun subscribe() {
 

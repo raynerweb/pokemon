@@ -54,6 +54,7 @@
             android:clickable="true"
             android:contentDescription="@string/sort"
             android:focusable="true"
+            android:onClick="@{fragment::sortByName}"
             android:padding="16dp"
             android:src="@drawable/ic_baseline_arrow_downward_24"
             app:layout_constraintEnd_toEndOf="parent"
