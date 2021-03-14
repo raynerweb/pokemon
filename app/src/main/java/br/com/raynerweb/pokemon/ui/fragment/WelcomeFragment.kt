@@ -25,6 +25,7 @@ class WelcomeFragment : Fragment() {
     ): View {
         binding = FragmentWelcomeBinding.inflate(inflater, container, false)
         binding.fragment = this
+        binding.vm = viewModel
         binding.lifecycleOwner = this
         return binding.root
     }

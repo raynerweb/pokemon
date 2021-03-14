@@ -7,6 +7,10 @@
     <data>
 
         <variable
+            name="vm"
+            type="br.com.raynerweb.pokemon.viewmodel.WelcomeViewModel" />
+
+        <variable
             name="fragment"
             type="br.com.raynerweb.pokemon.ui.fragment.WelcomeFragment" />
     </data>
