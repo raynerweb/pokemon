@@ -31,7 +31,10 @@ class PokemonTypeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.tvHello.text = getString(R.string.hello_trainer, "Ráyner")
+
+        viewModel.username.observe(viewLifecycleOwner, { username ->
+            binding.tvHello.text = getString(R.string.hello_trainer, username)
+        })
 
         viewModel.pokemonTypesState.observe(viewLifecycleOwner, {
             setupTypesAdapter(it)

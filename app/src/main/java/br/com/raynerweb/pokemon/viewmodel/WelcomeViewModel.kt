@@ -23,7 +23,7 @@ class WelcomeViewModel @Inject constructor(
     private val trainerRepository: TrainerRepository,
 ) : ViewModel() {
 
-    val username = SingleLiveEvent<String>()
+    val username = MutableLiveData<String>()
 
     private val _pokemonTypes = MutableLiveData<List<PokemonType>>()
     val pokemonTypesState: LiveData<List<PokemonType>> get() = _pokemonTypes
