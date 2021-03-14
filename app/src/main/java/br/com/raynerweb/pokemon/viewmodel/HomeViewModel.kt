@@ -75,7 +75,8 @@ class HomeViewModel @Inject constructor(
 
     fun pokemons() = viewModelScope.launch {
         _pokemonsState.value = pokemonRepository.findGroupedByTypes()
-            .filter { grouped -> grouped.type.typeId == trainerRepository.getPokemonType() }.first()
+            .filter { grouped -> grouped.type.typeId == trainerRepository.getPokemonType() }
+            .first()
             .pokemons.map {
                 Pokemon(
                     name = it.name,
