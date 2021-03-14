@@ -5,17 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import br.com.raynerweb.pokemon.R
 import br.com.raynerweb.pokemon.databinding.FragmentWelcomeBinding
 import br.com.raynerweb.pokemon.viewmodel.WelcomeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class WelcomeFragment : Fragment() {
 
     private lateinit var binding: FragmentWelcomeBinding
 
-    private val viewModel: WelcomeViewModel by activityViewModels()
+    private val viewModel: WelcomeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,6 +25,7 @@ class WelcomeFragment : Fragment() {
     ): View {
         binding = FragmentWelcomeBinding.inflate(inflater, container, false)
         binding.fragment = this
+        binding.vm = viewModel
         binding.lifecycleOwner = this
         return binding.root
     }

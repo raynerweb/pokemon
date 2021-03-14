@@ -10,13 +10,15 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import br.com.raynerweb.pokemon.R
 import br.com.raynerweb.pokemon.databinding.FragmentUsernameBinding
-import br.com.raynerweb.pokemon.viewmodel.WelcomeViewModel
+import br.com.raynerweb.pokemon.viewmodel.UsernameViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class UsernameFragment : Fragment() {
 
     private lateinit var binding: FragmentUsernameBinding
 
-    private val viewModel: WelcomeViewModel by activityViewModels()
+    private val viewModel: UsernameViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
