@@ -1,25 +1,13 @@
 package br.com.raynerweb.pokemon.repository
 
-import br.com.raynerweb.pokemon.repository.preferences.PokemonTypePreferences
-import br.com.raynerweb.pokemon.repository.preferences.UsernamePreferences
-import javax.inject.Inject
+interface TrainerRepository {
 
-class TrainerRepository @Inject constructor(
-    private val usernamePreferences: UsernamePreferences,
-    private val pokemonTypePreferences: PokemonTypePreferences,
+    fun setTrainer(username: String)
 
-    ) {
+    fun getTrainer(): String
 
-    fun setTrainer(username: String) {
-        usernamePreferences.username = username
-    }
+    fun setPokemonType(id: Long)
 
-    fun getTrainer() = usernamePreferences.username
-
-    fun setPokemonType(id: Long) {
-        pokemonTypePreferences.pokemonType = id
-    }
-
-    fun getPokemonType() = pokemonTypePreferences.pokemonType
+    fun getPokemonType(): Long
 
 }
