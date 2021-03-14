@@ -51,6 +51,21 @@ class HomeFragment : Fragment() {
             requireActivity().getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchView = searchItem.actionView as SearchView
         searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
+
+        searchView.apply {
+            maxWidth = Integer.MAX_VALUE
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    viewModel.filter(newText)
+                    return true
+                }
+            })
+        }
+
     }
 
     fun sortByName(view: View) {

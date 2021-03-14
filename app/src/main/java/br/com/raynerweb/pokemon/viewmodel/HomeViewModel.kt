@@ -1,5 +1,6 @@
 package br.com.raynerweb.pokemon.viewmodel
 
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,6 +9,7 @@ import br.com.raynerweb.pokemon.domain.PokemonType
 import br.com.raynerweb.pokemon.repository.PokemonRepository
 import br.com.raynerweb.pokemon.repository.TrainerRepository
 import br.com.raynerweb.pokemon.repository.local.entity.SortSelect
+import br.com.raynerweb.pokemon.repository.local.entity.TypesWithPokemons
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.util.*
@@ -21,9 +23,29 @@ class HomeViewModel @Inject constructor(
 ) :
     ViewModel() {
 
-    private var sortState = SortSelect.ASC
+    private val _pokemonTypePreference = MutableLiveData(trainerRepository.getPokemonType())
 
-    val pokemonsState = MutableLiveData<List<Pokemon>>()
+    private val _groupState = MutableLiveData<List<TypesWithPokemons>>()
+
+    private var _sortSelectState = MutableLiveData(SortSelect.ASC)
+
+    private val _pokemonsState = MutableLiveData<List<Pokemon>>()
+    val pokemonsState = MediatorLiveData<List<Pokemon>>()
+
+    init {
+        pokemonsState.addSource(_pokemonsState) {
+            pokemonsState.value = it
+        }
+        pokemonsState.addSource(_sortSelectState) {
+            val list = _pokemonsState.value ?: mutableListOf()
+            if (_sortSelectState.value == SortSelect.DESC) {
+                _pokemonsState.value = list.sortedBy { it.name }.reversed()
+            } else {
+                _pokemonsState.value = list.sortedBy { it.name }
+            }
+        }
+    }
+
     val pokemonTypesState = MutableLiveData<List<PokemonType>>()
     val errorState = MutableLiveData<String>()
 
@@ -33,8 +55,13 @@ class HomeViewModel @Inject constructor(
     }
 
     fun sort() {
-        sortState = if (sortState == SortSelect.ASC) SortSelect.DESC else SortSelect.ASC
-        pokemonsState.value = pokemonsState.value?.reversed()
+        _sortSelectState.value =
+            if (_sortSelectState.value == SortSelect.ASC) SortSelect.DESC else SortSelect.ASC
+    }
+
+
+    fun filter(newText: String?) {
+
     }
 
     fun pokemonTypes() = viewModelScope.launch {
@@ -48,19 +75,17 @@ class HomeViewModel @Inject constructor(
     }
 
     fun pokemons() = viewModelScope.launch {
-        val list = pokemonRepository.findGroupedByTypes()
+        _groupState.value = pokemonRepository.findGroupedByTypes()
+
+        _pokemonsState.value = pokemonRepository.findGroupedByTypes()
             .filter { grouped -> grouped.type.typeId == trainerRepository.getPokemonType() }.first()
             .pokemons.map {
                 Pokemon(
                     name = it.name,
                     image = it.image,
                 )
-            }.sortedBy { pokemon -> pokemon.name }
+            }.sortedBy { it.name }
 
-        if (sortState == SortSelect.DESC) {
-            pokemonsState.value = list.reversed()
-        } else {
-            pokemonsState.value = list
-        }
     }
+
 }
