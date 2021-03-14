@@ -22,6 +22,10 @@ class PokemonRepository @Inject constructor(
     private val typeDao: TypeDao,
 ) {
 
+    suspend fun findGroupedByTypes() = withContext(context = Dispatchers.IO) {
+        return@withContext typeDao.findGroupedByTypes()
+    }
+
     suspend fun findAllTypes() = withContext(context = Dispatchers.IO) {
         return@withContext typeDao.findAll()
     }

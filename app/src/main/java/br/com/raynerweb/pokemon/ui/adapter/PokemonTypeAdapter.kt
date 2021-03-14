@@ -8,7 +8,8 @@ import br.com.raynerweb.pokemon.domain.PokemonType
 import coil.load
 
 class PokemonTypeAdapter(
-    val pokemonTypes: List<PokemonType>
+    val pokemonTypes: List<PokemonType>,
+    val clickListener: (PokemonType) -> Unit
 ) :
     RecyclerView.Adapter<PokemonTypeAdapter.PokemonTypeViewHolder>() {
 
@@ -27,6 +28,9 @@ class PokemonTypeAdapter(
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(pokemonType: PokemonType) {
+            binding.root.setOnClickListener {
+                clickListener.invoke(pokemonType)
+            }
             binding.pokemonType = pokemonType
             binding.ivType.load(pokemonType.image)
             binding.executePendingBindings()

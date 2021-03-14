@@ -52,22 +52,25 @@ class HomeFragment : Fragment() {
         val searchView = searchItem.actionView as SearchView
         searchView.setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
     }
-    
+
     fun sortByName(view: View) {
-        
+        binding.btnSort.animate().rotationBy(180f).setDuration(200).start()
+        viewModel.sort()
     }
 
     private fun subscribe() {
 
-        viewModel.pokemonsState.observe(viewLifecycleOwner, {
-            binding.rvPokemons.layoutManager = LinearLayoutManager(requireContext())
-            binding.rvPokemons.adapter = PokemonAdapter(it)
-        })
-
         viewModel.pokemonTypesState.observe(viewLifecycleOwner, {
             binding.rvTypes.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            binding.rvTypes.adapter = PokemonTypeAdapter(it)
+            binding.rvTypes.adapter = PokemonTypeAdapter(it) { pokemonType ->
+                viewModel.changePokemonType(pokemonType = pokemonType)
+            }
+        })
+
+        viewModel.pokemonsState.observe(viewLifecycleOwner, {
+            binding.rvPokemons.layoutManager = LinearLayoutManager(requireContext())
+            binding.rvPokemons.adapter = PokemonAdapter(it)
         })
 
         viewModel.errorState.observe(viewLifecycleOwner, {
