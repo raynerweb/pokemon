@@ -4,6 +4,6 @@ import androidx.room.Entity
 
 @Entity(primaryKeys = ["pokemonId", "typeId"])
 data class PokemonTypeEntity(
-    val pokemonId: Int,
-    val typeId: Int,
+    val pokemonId: Long,
+    val typeId: Long,
 )

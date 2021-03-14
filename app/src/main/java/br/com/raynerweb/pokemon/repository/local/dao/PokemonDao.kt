@@ -4,15 +4,17 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import br.com.raynerweb.pokemon.repository.local.entity.PokemonEntity
-import br.com.raynerweb.pokemon.repository.local.entity.TypesWithPokemons
 
 @Dao
 interface PokemonDao {
 
     @Insert
-    fun save(pokemonEntity: PokemonEntity)
+    fun save(pokemons: List<PokemonEntity>)
 
-    @Query("SELECT * FROM type")
-    fun findAllGroupByType(): List<TypesWithPokemons>
+    @Insert
+    fun save(pokemon: PokemonEntity): Long
+
+    @Query("SELECT * FROM pokemon")
+    fun findAll(): List<PokemonEntity>
 
 }

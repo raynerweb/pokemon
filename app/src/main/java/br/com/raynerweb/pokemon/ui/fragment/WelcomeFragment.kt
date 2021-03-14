@@ -5,13 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import br.com.raynerweb.pokemon.R
 import br.com.raynerweb.pokemon.databinding.FragmentWelcomeBinding
+import br.com.raynerweb.pokemon.viewmodel.WelcomeViewModel
 
 class WelcomeFragment : Fragment() {
 
     private lateinit var binding: FragmentWelcomeBinding
+
+    private val viewModel: WelcomeViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -21,6 +25,21 @@ class WelcomeFragment : Fragment() {
         binding.fragment = this
         binding.lifecycleOwner = this
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.loadingState.observe(viewLifecycleOwner, {
+            if (it) {
+                binding.btnNext.visibility = View.GONE
+                binding.progress.visibility = View.VISIBLE
+                binding.tvProgress.visibility = View.VISIBLE
+            } else {
+                binding.tvProgress.visibility = View.GONE
+                binding.progress.visibility = View.GONE
+                binding.btnNext.visibility = View.VISIBLE
+            }
+        })
     }
 
     fun next(view: View) {

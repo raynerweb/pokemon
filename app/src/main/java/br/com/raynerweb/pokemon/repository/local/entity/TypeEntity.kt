@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "type")
 data class TypeEntity(
     @PrimaryKey(autoGenerate = true)
-    val typeId: Int = 0,
+    val typeId: Long = 0,
     val image: String,
     val name: String,
 )

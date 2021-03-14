@@ -30,4 +30,8 @@ object DatabaseModule {
     @Provides
     fun provideTypeDao(database: AppDatabase) = database.typeDao()
 
+    @Singleton
+    @Provides
+    fun providePokemonTypeDao(database: AppDatabase) = database.pokemonTypeDao()
+
 }

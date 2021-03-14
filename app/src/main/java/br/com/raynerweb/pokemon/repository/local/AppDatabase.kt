@@ -3,6 +3,7 @@ package br.com.raynerweb.pokemon.repository.local
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import br.com.raynerweb.pokemon.repository.local.dao.PokemonDao
+import br.com.raynerweb.pokemon.repository.local.dao.PokemonTypeDao
 import br.com.raynerweb.pokemon.repository.local.dao.TypeDao
 import br.com.raynerweb.pokemon.repository.local.entity.PokemonEntity
 import br.com.raynerweb.pokemon.repository.local.entity.PokemonTypeEntity
@@ -16,5 +17,6 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun pokemonDao(): PokemonDao
     abstract fun typeDao(): TypeDao
+    abstract fun pokemonTypeDao(): PokemonTypeDao
 
 }

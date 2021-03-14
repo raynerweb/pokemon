@@ -9,9 +9,11 @@ import br.com.raynerweb.pokemon.repository.local.entity.TypeEntity
 interface TypeDao {
 
     @Insert
-    fun save(typeEntity: TypeEntity)
+    fun save(typeEntityList: List<TypeEntity>)
 
     @Query("SELECT * FROM type")
     fun findAll(): List<TypeEntity>
 
+    @Query("SELECT * FROM type WHERE name IN (:names)")
+    fun findByNames(names: List<String>): List<TypeEntity>
 }
