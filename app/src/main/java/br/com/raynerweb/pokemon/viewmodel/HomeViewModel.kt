@@ -23,30 +23,21 @@ class HomeViewModel @Inject constructor(
     val errorState = MutableLiveData<String>()
 
     fun pokemonTypes() = viewModelScope.launch {
-        pokemonRepository.getPokemonsTypes()?.let { dto ->
-            pokemonTypesState.value =
-                dto.results.map {
-                    PokemonType(
-                        image = it.thumbnailImage,
-                        name = it.name.capitalize(Locale.getDefault())
-                    )
-                }.sortedBy { it.name }
-        } ?: run {
-            errorState.value = "There is no data!"
+        pokemonTypesState.value = pokemonRepository.findAllTypes().map {
+            PokemonType(
+                id = it.typeId,
+                image = it.image,
+                name = it.name.capitalize(Locale.getDefault())
+            )
         }
     }
 
     fun pokemons() = viewModelScope.launch {
-        pokemonRepository.getPokemons()?.let { dto ->
-            pokemonsState.value = dto.map {
-                Pokemon(
-                    name = it.name,
-                    image = it.thumbnailImage,
-                    type = it.type
-                )
-            }.toList().sortedBy { it.name }
-        } ?: run {
-            errorState.value = "There is no data!"
+        pokemonsState.value = pokemonRepository.findAllPokemons().map {
+            Pokemon(
+                name = it.name,
+                image = it.image,
+            )
         }
     }
 }

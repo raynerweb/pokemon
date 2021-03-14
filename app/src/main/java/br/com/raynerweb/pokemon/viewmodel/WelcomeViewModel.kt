@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.raynerweb.pokemon.domain.PokemonType
 import br.com.raynerweb.pokemon.ext.SingleLiveEvent
 import br.com.raynerweb.pokemon.repository.PokemonRepository
 import br.com.raynerweb.pokemon.repository.TrainerRepository
@@ -24,6 +25,12 @@ class WelcomeViewModel @Inject constructor(
 
     val username = SingleLiveEvent<String>()
 
+    private val _pokemonTypes = MutableLiveData<List<PokemonType>>()
+    val pokemonTypesState: LiveData<List<PokemonType>> get() = _pokemonTypes
+
+    private val _pokemonTypeSaved = SingleLiveEvent<Unit>()
+    val pokemonTypeSaved: LiveData<Unit> get() = _pokemonTypeSaved
+
     private val _usernameSaved = SingleLiveEvent<Unit>()
     val usernameSaved: LiveData<Unit> get() = _usernameSaved
 
@@ -43,11 +50,17 @@ class WelcomeViewModel @Inject constructor(
         }
     }
 
+    fun saveSelectedPokemonType(pokemonType: PokemonType) {
+        trainerRepository.setPokemonType(pokemonType.id)
+        _pokemonTypeSaved.call()
+    }
+
     init {
         viewModelScope.launch {
             _isLoading.value = true
 
-            if (pokemonRepository.findAllTypes().isEmpty()) {
+            val types = pokemonRepository.findAllTypes()
+            if (types.isEmpty()) {
                 pokemonRepository.getPokemonsTypes()?.let { dto ->
 
                     pokemonRepository.saveTypes(dto.results.map {
@@ -59,6 +72,15 @@ class WelcomeViewModel @Inject constructor(
 
                 } ?: run {
                     //TODO tratar erro
+                }
+            } else {
+                _pokemonTypes.value = types.map {
+                    PokemonType(
+                        id = it.typeId,
+                        name = it.name.toLowerCase(Locale.getDefault())
+                            .capitalize(Locale.getDefault()),
+                        image = it.image,
+                    )
                 }
             }
 

@@ -5,14 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import br.com.raynerweb.pokemon.R
 import br.com.raynerweb.pokemon.databinding.FragmentPokemonTypeBinding
+import br.com.raynerweb.pokemon.domain.PokemonType
+import br.com.raynerweb.pokemon.ui.adapter.PokemonTypeArrayAdapter
+import br.com.raynerweb.pokemon.viewmodel.WelcomeViewModel
 
 class PokemonTypeFragment : Fragment() {
 
     private lateinit var binding: FragmentPokemonTypeBinding
+    private val viewModel: WelcomeViewModel by activityViewModels()
+    private lateinit var typeAdapter: PokemonTypeArrayAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,10 +33,27 @@ class PokemonTypeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.tvHello.text = getString(R.string.hello_trainer, "Ráyner")
 
+        viewModel.pokemonTypesState.observe(viewLifecycleOwner, {
+            setupTypesAdapter(it)
+        })
+
+        viewModel.pokemonTypeSaved.observe(viewLifecycleOwner, {
+            findNavController().navigate(R.id.action_pokemonTypeFragment_to_homeActivity)
+        })
+
+    }
+
+    private fun setupTypesAdapter(types: List<PokemonType>) {
+        typeAdapter = PokemonTypeArrayAdapter(
+            requireContext(),
+            R.layout.view_spinner_pokemon_types,
+            types
+        )
+        binding.spPokemonType.adapter = typeAdapter
     }
 
     fun next(view: View) {
-        findNavController().navigate(R.id.action_pokemonTypeFragment_to_homeActivity)
+        viewModel.saveSelectedPokemonType(binding.spPokemonType.selectedItem as PokemonType)
     }
 
 }

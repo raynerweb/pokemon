@@ -11,8 +11,11 @@ interface TypeDao {
     @Insert
     fun save(typeEntityList: List<TypeEntity>)
 
-    @Query("SELECT * FROM type")
+    @Query("SELECT * FROM type ORDER BY name ASC")
     fun findAll(): List<TypeEntity>
+
+    @Query("SELECT * FROM type ORDER BY name DESC")
+    fun findAllOrderByDesc(): List<TypeEntity>
 
     @Query("SELECT * FROM type WHERE name IN (:names)")
     fun findByNames(names: List<String>): List<TypeEntity>
