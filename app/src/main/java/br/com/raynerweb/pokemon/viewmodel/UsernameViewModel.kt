@@ -15,19 +15,19 @@ class UsernameViewModel @Inject constructor(
 
     val username = MutableLiveData<String>()
 
-    private val _usernameSaved = SingleLiveEvent<Unit>()
-    val usernameSaved: LiveData<Unit> get() = _usernameSaved
+    private val _usernameSaved = SingleLiveEvent<Boolean>()
+    val usernameSaved: LiveData<Boolean> get() = _usernameSaved
 
-    private val _usernameError = SingleLiveEvent<Unit>()
-    val usernameError: LiveData<Unit> get() = _usernameError
+    private val _usernameError = SingleLiveEvent<Boolean>()
+    val usernameError: LiveData<Boolean> get() = _usernameError
 
     fun saveUsername() {
         val name = username.value ?: ""
         if (name.isBlank()) {
-            _usernameError.call()
+            _usernameError.value = true
         } else {
             trainerRepository.setTrainer(username = name)
-            _usernameSaved.call()
+            _usernameSaved.value = true
         }
     }
 
