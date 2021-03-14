@@ -9,7 +9,9 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import br.com.raynerweb.pokemon.R
 import br.com.raynerweb.pokemon.databinding.FragmentHomeBinding
+import br.com.raynerweb.pokemon.repository.local.entity.SortSelect
 import br.com.raynerweb.pokemon.ui.adapter.PokemonAdapter
 import br.com.raynerweb.pokemon.ui.adapter.PokemonTypeAdapter
 import br.com.raynerweb.pokemon.viewmodel.HomeViewModel
@@ -69,7 +71,6 @@ class HomeFragment : Fragment() {
     }
 
     fun sortByName(view: View) {
-        binding.btnSort.animate().rotationBy(180f).setDuration(200).start()
         viewModel.sort()
     }
 
@@ -80,6 +81,14 @@ class HomeFragment : Fragment() {
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             binding.rvTypes.adapter = PokemonTypeAdapter(it) { pokemonType ->
                 viewModel.changePokemonType(pokemonType = pokemonType)
+            }
+        })
+
+        viewModel.sortSelectState.observe(viewLifecycleOwner, {
+            if (it == SortSelect.ASC) {
+                binding.btnSort.setImageResource(R.drawable.ic_baseline_arrow_downward_24)
+            } else {
+                binding.btnSort.setImageResource(R.drawable.ic_baseline_arrow_upward_24)
             }
         })
 
