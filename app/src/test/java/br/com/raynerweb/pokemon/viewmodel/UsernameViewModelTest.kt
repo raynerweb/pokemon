@@ -15,7 +15,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyString
-import org.mockito.ArgumentMatchers.eq
 import org.mockito.InjectMocks
 import org.mockito.MockitoAnnotations
 
@@ -46,9 +45,9 @@ class UsernameViewModelTest {
     fun `Should notify usernameError`() {
         doNothing().`when`(repository).setTrainer(anyString())
         viewModel.saveUsername()
-        val observer = spy<Observer<Boolean>>()
+        val observer = spy<Observer<Unit>>()
         viewModel.usernameError.observeForever(observer)
-        verify(observer).onChanged(eq(true))
+        verify(observer).onChanged(null)
     }
 
     @Test
@@ -56,9 +55,9 @@ class UsernameViewModelTest {
         doNothing().`when`(repository).setTrainer(anyString())
         viewModel.username.value = "TESTE"
         viewModel.saveUsername()
-        val observer = spy<Observer<Boolean>>()
+        val observer = spy<Observer<Unit>>()
         viewModel.usernameSaved.observeForever(observer)
-        verify(observer).onChanged(eq(true))
+        verify(observer).onChanged(null)
     }
 
 
