@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.raynerweb.pokemon.domain.Pokemon
 import br.com.raynerweb.pokemon.domain.PokemonType
-import br.com.raynerweb.pokemon.ext.SingleLiveEvent
 import br.com.raynerweb.pokemon.repository.PokemonRepository
 import br.com.raynerweb.pokemon.repository.TrainerRepository
 import br.com.raynerweb.pokemon.repository.local.entity.SortSelect
@@ -24,6 +23,7 @@ class HomeViewModel @Inject constructor(
     ViewModel() {
 
     var sortSelectState = MutableLiveData<SortSelect>()
+    private val _searching = MutableLiveData<String>()
 
     private val _pokemonsState = MutableLiveData<List<Pokemon>>()
     val pokemonsState = MediatorLiveData<List<Pokemon>>()
@@ -57,7 +57,10 @@ class HomeViewModel @Inject constructor(
 
 
     fun filter(newText: String?) {
-
+        newText?.let {
+            pokemonsState.value =
+                _pokemonsState.value?.filter { it.name.contains(newText, ignoreCase = true) }
+        }
     }
 
     fun pokemonTypes() = viewModelScope.launch {
@@ -80,6 +83,7 @@ class HomeViewModel @Inject constructor(
                 )
             }
         sortSelectState.value = SortSelect.ASC
+        _searching.value = ""
     }
 
 }
