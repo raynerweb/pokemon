@@ -9,9 +9,6 @@ import br.com.raynerweb.pokemon.repository.local.entity.PokemonEntity
 interface PokemonDao {
 
     @Insert
-    fun save(pokemons: List<PokemonEntity>)
-
-    @Insert
     fun save(pokemon: PokemonEntity): Long
 
     @Query("SELECT * FROM pokemon")
