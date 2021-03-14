@@ -4,7 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.raynerweb.pokemon.ext.SingleLiveEvent
 import br.com.raynerweb.pokemon.repository.PokemonRepository
+import br.com.raynerweb.pokemon.repository.TrainerRepository
 import br.com.raynerweb.pokemon.repository.local.entity.PokemonEntity
 import br.com.raynerweb.pokemon.repository.local.entity.PokemonTypeEntity
 import br.com.raynerweb.pokemon.repository.local.entity.TypeEntity
@@ -13,13 +15,33 @@ import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
+
 @HiltViewModel
 class WelcomeViewModel @Inject constructor(
-    private val pokemonRepository: PokemonRepository
+    private val pokemonRepository: PokemonRepository,
+    private val trainerRepository: TrainerRepository,
 ) : ViewModel() {
+
+    val username = SingleLiveEvent<String>()
+
+    private val _usernameSaved = SingleLiveEvent<Unit>()
+    val usernameSaved: LiveData<Unit> get() = _usernameSaved
+
+    private val _usernameError = SingleLiveEvent<Unit>()
+    val usernameError: LiveData<Unit> get() = _usernameError
 
     private val _isLoading = MutableLiveData<Boolean>()
     val loadingState: LiveData<Boolean> get() = _isLoading
+
+    fun saveUsername() {
+        val name = username.value ?: ""
+        if (name.isBlank()) {
+            _usernameError.call()
+        } else {
+            trainerRepository.setTrainer(username = name)
+            _usernameSaved.call()
+        }
+    }
 
     init {
         viewModelScope.launch {
