@@ -16,4 +16,5 @@
     <string name="sort">Sort</string>
     <string name="search">Search</string>
     <string name="updating_database">Updating database…</string>
+    <string name="please_enter_yout_name">Please, enter your name!</string>
 </resources>
