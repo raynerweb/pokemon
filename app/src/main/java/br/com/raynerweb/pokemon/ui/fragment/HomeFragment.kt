@@ -46,8 +46,8 @@ class HomeFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(br.com.raynerweb.pokemon.R.menu.menu_home, menu)
-        val searchItem: MenuItem = menu.findItem(br.com.raynerweb.pokemon.R.id.action_search)
+        inflater.inflate(R.menu.menu_home, menu)
+        val searchItem: MenuItem = menu.findItem(R.id.action_search)
         val searchManager =
             requireActivity().getSystemService(Context.SEARCH_SERVICE) as SearchManager
         val searchView = searchItem.actionView as SearchView

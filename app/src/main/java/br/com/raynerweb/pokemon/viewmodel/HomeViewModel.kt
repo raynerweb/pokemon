@@ -26,7 +26,7 @@ class HomeViewModel @Inject constructor(
     ViewModel() {
 
     private val _filter = MutableLiveData<String>()
-    var sort = SingleLiveEvent<SortSelect>()
+    val sort = SingleLiveEvent<SortSelect>()
 
     private val _groupedPokemons = MutableLiveData<TypesWithPokemons>()
     val pokemons = MediatorLiveData<List<Pokemon>>()
