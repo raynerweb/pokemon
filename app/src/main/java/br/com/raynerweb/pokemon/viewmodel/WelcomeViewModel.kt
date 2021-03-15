@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.raynerweb.pokemon.ext.SingleLiveEvent
 import br.com.raynerweb.pokemon.repository.PokemonRepository
 import br.com.raynerweb.pokemon.repository.local.entity.PokemonEntity
 import br.com.raynerweb.pokemon.repository.local.entity.PokemonTypeEntity
@@ -18,6 +19,8 @@ import javax.inject.Inject
 class WelcomeViewModel @Inject constructor(
     private val pokemonRepository: PokemonRepository,
 ) : ViewModel() {
+
+    private val _databaseComplete = SingleLiveEvent<Boolean>()
 
     private val _isLoading = MutableLiveData<Boolean>()
     val loadingState: LiveData<Boolean> get() = _isLoading
@@ -51,12 +54,6 @@ class WelcomeViewModel @Inject constructor(
                             )
                         )
 
-                        pokemonRepository.findAllTypes().forEach { typeEntity ->
-                            it.type.forEach { typeName ->
-
-                            }
-                        }
-
                         val list = pokemonRepository.findTypesByName(it.type.map { typeName ->
                             typeName.toUpperCase(Locale.getDefault())
                         })
@@ -68,8 +65,11 @@ class WelcomeViewModel @Inject constructor(
                             )
                         })
 
+                        _databaseComplete.value = true
                     }
                 }
+            } else {
+                _databaseComplete.value = false
             }
 
             _isLoading.value = false

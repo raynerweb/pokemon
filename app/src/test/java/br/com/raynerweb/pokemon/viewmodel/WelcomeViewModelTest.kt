@@ -2,20 +2,26 @@ package br.com.raynerweb.pokemon.viewmodel
 
 import androidx.annotation.CallSuper
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.Observer
+import br.com.raynerweb.pokemon.ext.SingleLiveEvent
 import br.com.raynerweb.pokemon.repository.PokemonRepository
-import br.com.raynerweb.pokemon.repository.local.entity.PokemonEntity
 import br.com.raynerweb.pokemon.repository.local.entity.TypeEntity
+import br.com.raynerweb.pokemon.repository.service.dto.PokemonTypeDto
+import br.com.raynerweb.pokemon.repository.service.dto.ResponsePokemonDto
+import br.com.raynerweb.pokemon.repository.service.dto.ResponsePokemonTypeDto
 import br.com.raynerweb.pokemon.test.CoroutineTestRule
-import com.nhaarman.mockitokotlin2.*
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.whenever
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.InjectMocks
 import org.mockito.MockitoAnnotations
+import java.lang.reflect.Field
 
 class WelcomeViewModelTest {
 
@@ -42,40 +48,59 @@ class WelcomeViewModelTest {
     }
 
     @Test
-    fun `Should notify loadingState on startup viewmodel`() = runBlocking {
-        val observer = spy<Observer<Boolean>>()
-        viewModel.loadingState.observeForever(observer)
-        verify(observer).onChanged(eq(false))
+    fun `Should populate the database when using the app for the first time`() = runBlocking {
+        val f: Field = viewModel.javaClass.getDeclaredField("_databaseComplete");
+        f.isAccessible = true;
+        val databaseComplete = f.get(viewModel) as SingleLiveEvent<Boolean>
+        assertTrue(databaseComplete.value ?: false)
     }
 
     private fun setupMock() = runBlocking {
-        val typesEntityList = typesEntityList()
-        whenever(repository.findAllTypes()).thenReturn(typesEntityList)
+        whenever(repository.findAllTypes()).thenReturn(emptyList())
+        whenever(repository.findAllPokemons()).thenReturn(emptyList())
 
-        val pokemonEntityList = pokemonEntityList()
-        whenever(repository.findAllPokemons()).thenReturn(pokemonEntityList)
+        val pokemonsTypes = getPokemonsTypes()
+        whenever(repository.getPokemonsTypes()).thenReturn(pokemonsTypes)
+
+        val pokemons = getPokemons()
+        whenever(repository.getPokemons()).thenReturn(pokemons)
+
+        whenever(repository.savePokemon(any())).thenReturn(1)
+
+        whenever(repository.findTypesByName(any())).thenReturn(getTypesByName())
     }
 
-    private fun typesEntityList(): List<TypeEntity> {
-        val list = mutableListOf<TypeEntity>()
-        list.add(
-            TypeEntity(
-                typeId = 1,
-                name = "eletric",
-                image = "image"
+    private fun getPokemonsTypes(): ResponsePokemonTypeDto {
+        val set = mutableSetOf(
+            PokemonTypeDto(
+                thumbnailImage = "image",
+                name = "eletric"
             )
         )
-        return list
+        return ResponsePokemonTypeDto(
+            results = set
+        )
     }
 
-    private fun pokemonEntityList(): List<PokemonEntity> {
-        return mutableListOf(
-            PokemonEntity(
-                pokemonId = 1,
-                image = "image",
+    private fun getPokemons(): MutableSet<ResponsePokemonDto> {
+        return mutableSetOf(
+            ResponsePokemonDto(
+                id = 1,
+                thumbnailImage = "image",
                 name = "name",
+                type = mutableListOf("eletric")
             )
-        ).toList()
+        )
+    }
+
+    private fun getTypesByName(): MutableList<TypeEntity> {
+        return mutableListOf(
+            TypeEntity(
+                typeId = 1,
+                image = "image",
+                name = "ELETRIC"
+            )
+        )
     }
 
 }
