@@ -25,4 +25,6 @@ interface PokemonRepository {
     suspend fun getPokemonsTypes(): ResponsePokemonTypeDto?
 
     suspend fun getPokemons(): Set<ResponsePokemonDto>?
+
+    suspend fun findOneTypeWithPokemons(typeId: Long): TypesWithPokemons
 }
