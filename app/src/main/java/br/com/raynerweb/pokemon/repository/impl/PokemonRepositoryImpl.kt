@@ -25,6 +25,12 @@ class PokemonRepositoryImpl @Inject constructor(
     private val typeDao: TypeDao,
 ) : PokemonRepository {
 
+
+    override suspend fun findOneTypeWithPokemons(typeId: Long) =
+        withContext(context = Dispatchers.IO) {
+            return@withContext typeDao.findOne(typeId)
+        }
+
     override suspend fun findGroupedByTypes() = withContext(context = Dispatchers.IO) {
         return@withContext typeDao.findGroupedByTypes()
     }
@@ -33,9 +39,10 @@ class PokemonRepositoryImpl @Inject constructor(
         return@withContext typeDao.findAll()
     }
 
-    override suspend fun findTypesByName(names: List<String>) = withContext(context = Dispatchers.IO) {
-        return@withContext typeDao.findByNames(names)
-    }
+    override suspend fun findTypesByName(names: List<String>) =
+        withContext(context = Dispatchers.IO) {
+            return@withContext typeDao.findByNames(names)
+        }
 
     override suspend fun saveTypes(types: List<TypeEntity>) =
         withContext(context = Dispatchers.IO) {
