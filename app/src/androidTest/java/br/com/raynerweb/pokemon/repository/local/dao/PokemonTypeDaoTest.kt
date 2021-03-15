@@ -10,6 +10,7 @@ import br.com.raynerweb.pokemon.repository.local.entity.PokemonTypeEntity
 import br.com.raynerweb.pokemon.repository.local.entity.TypeEntity
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -79,6 +80,51 @@ class PokemonTypeDaoTest {
 
         assertEquals(grouped.size, 1)
         assertEquals(grouped.first().pokemons.size, idList.size)
+    }
+
+    @Test
+    @Throws(IOException::class)
+    fun shouldSaveRelationshipAndFindOneTypeWithPokemons() {
+        val types = mutableListOf<TypeEntity>()
+        types.add(
+            TypeEntity(
+                image = "",
+                name = "AAAA",
+            )
+        )
+        typeDao.save(types)
+
+        val idList = mutableListOf<Long>()
+        idList.add(
+            pokemonDao.save(
+                PokemonEntity(
+                    image = "image",
+                    name = "some pokemon",
+                )
+            )
+        )
+        idList.add(
+            pokemonDao.save(
+                PokemonEntity(
+                    image = "image",
+                    name = "other pokemon",
+                )
+            )
+        )
+
+        val typeId = typeDao.findAll().first().typeId
+
+        pokemonTypeDao.save(idList.map {
+            PokemonTypeEntity(
+                pokemonId = it,
+                typeId = typeId
+            )
+        })
+
+        val grouped = typeDao.findOne(typeId)
+
+        assertEquals(grouped.pokemons.size, 2)
+        assertEquals(grouped.type.typeId, typeDao.findAll().first().typeId)
     }
 
 

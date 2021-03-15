@@ -4,7 +4,6 @@ import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -41,8 +40,8 @@ class HomeFragment : Fragment() {
 
         subscribe()
 
+        viewModel.findPokemons()
         viewModel.pokemonTypes()
-        viewModel.pokemons()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -75,16 +74,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun subscribe() {
-
         viewModel.pokemonTypesState.observe(viewLifecycleOwner, {
             binding.rvTypes.layoutManager =
                 LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             binding.rvTypes.adapter = PokemonTypeAdapter(it) { pokemonType ->
-                viewModel.changePokemonType(pokemonType = pokemonType)
+                viewModel.findPokemons(pokemonType = pokemonType)
             }
         })
 
-        viewModel.sortSelectState.observe(viewLifecycleOwner, {
+        viewModel.sort.observe(viewLifecycleOwner, {
             if (it == SortSelect.ASC) {
                 binding.btnSort.setImageResource(R.drawable.ic_baseline_arrow_downward_24)
             } else {
@@ -92,13 +90,9 @@ class HomeFragment : Fragment() {
             }
         })
 
-        viewModel.pokemonsState.observe(viewLifecycleOwner, {
+        viewModel.pokemons.observe(viewLifecycleOwner, {
             binding.rvPokemons.layoutManager = LinearLayoutManager(requireContext())
             binding.rvPokemons.adapter = PokemonAdapter(it)
-        })
-
-        viewModel.errorState.observe(viewLifecycleOwner, {
-            Toast.makeText(requireContext(), it, Toast.LENGTH_LONG).show()
         })
 
     }

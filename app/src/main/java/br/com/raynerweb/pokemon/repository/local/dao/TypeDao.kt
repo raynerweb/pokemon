@@ -20,4 +20,7 @@ interface TypeDao {
 
     @Query("SELECT * FROM type")
     fun findGroupedByTypes(): List<TypesWithPokemons>
+
+    @Query("SELECT * FROM type WHERE typeId = :typeId")
+    fun findOne(typeId: Long): TypesWithPokemons
 }
